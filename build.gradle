@@ -3,12 +3,14 @@ apply plugin: 'war'
 
 repositories {
     jcenter()
+    mavenLocal()
 }
 
 dependencies {
     compileOnly 'javax:javaee-web-api:7.0'
 
     implementation 'com.google.guava:guava:22.0'
+    implementation 'org.springframework:spring-webmvc:4.2.1.RELEASE'
     
     testImplementation 'junit:junit:4.12'
 }
