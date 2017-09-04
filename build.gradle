@@ -14,12 +14,3 @@ dependencies {
     
     testImplementation 'junit:junit:4.12'
 }
-
-task deploy() {
-    copy {
-        from 'build/libs'
-        into '/home/tvdinh/Desktop'
-    }
-}
-
-deploy.dependsOn assemble
