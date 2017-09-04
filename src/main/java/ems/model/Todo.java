@@ -12,7 +12,7 @@ public class Todo {
     public Todo() {
     }
 
-    public Todo(int id, String desc, String user, Date targetDate, boolean isDone) {
+    public Todo(int id, String user, String desc, Date targetDate, boolean isDone) {
         super();
         this.id = id;
         this.desc = desc;
@@ -89,5 +89,4 @@ public class Todo {
                 + isDone + "]";
     }
 
-    
 }
