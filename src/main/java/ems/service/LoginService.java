@@ -1,4 +1,4 @@
-package ems;
+package ems.service;
 
 public class LoginService {
 	public boolean validateUser(String user, String password) {
