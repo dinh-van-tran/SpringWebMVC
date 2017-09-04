@@ -1,5 +1,6 @@
 package ems.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,7 +11,8 @@ import ems.service.LoginService;
 
 @Controller
 public class LoginController {
-    private LoginService mLoginService = new LoginService();
+    @Autowired
+    private LoginService mLoginService;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String showLoginPage() {
