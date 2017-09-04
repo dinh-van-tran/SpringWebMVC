@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import ems.model.Todo;
 
 @Service
-class TodoService {
+public class TodoService {
     private static List<Todo> todos = new ArrayList<Todo>();
     private static int todoCount = 3;
 
