@@ -7,11 +7,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Todo for ${name}</title>
+<link href="/webjars/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-	<h1>Your Todos</h1>
-	<div>
-	   <table>
+	<div class="container">
+	   <table class="table table-striped">
 	       <caption>Your todo are</caption>
 	       <thead>
 	           <tr>
@@ -30,6 +30,11 @@
 	           </c:forEach>
 	       </tbody>
 	   </table>
+	   <div>
+	       <a class="button" href="/add-todo">Add</a>
+	   </div>
 	</div>
+	<script src="webjars/jquery/1.9.1/jquery.min.js"></script>
+	<script src="webjars/bootstraps/3.3.6/js/bootstrap.min.js"></script>
 </body>
 </html>
