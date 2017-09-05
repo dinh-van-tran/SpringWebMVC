@@ -10,10 +10,6 @@
 <link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-	<form action="/add-todo" method="post">
-		Description: <input name="desc" type="text" /> <input type="submit"
-			value="add" />
-	</form>
 	<div class="container">
 	   <form:form method="post" commandName="todo">
 	       <form:hidden path="id"/>
