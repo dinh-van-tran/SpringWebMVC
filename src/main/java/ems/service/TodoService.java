@@ -5,9 +5,9 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import org.springframework.stereotype.Service;
-
 import ems.model.Todo;
+
+import org.springframework.stereotype.Service;
 
 @Service
 public class TodoService {
@@ -15,32 +15,46 @@ public class TodoService {
     private static int todoCount = 3;
 
     static {
-        todos.add(new Todo(1, "in28minutes", "Learn Spring MVC", new Date(), false));
-        todos.add(new Todo(2, "in28minutes", "Learn Strut", new Date(), false));
-        todos.add(new Todo(3, "in28minutes", "Learn Hibernate", new Date(), false));
+        todos.add( new Todo( 1, "in28minutes", "Learn Spring MVC", new Date(), false ) );
+        todos.add( new Todo( 2, "in28minutes", "Learn Strut", new Date(), false ) );
+        todos.add( new Todo( 3, "in28minutes", "Learn Hibernate", new Date(), false ) );
     }
 
-    public List<Todo> retrieveTodos(String user) {
+    public List<Todo> retrieveTodos( String user ) {
         List<Todo> resultList = new ArrayList<Todo>();
-        if (user != null) {
-            for (Todo todo : todos) {
-                if (user.equals(todo.getUser())) {
-                    resultList.add(todo);
+        if ( user != null ) {
+            for ( Todo todo : todos ) {
+                if ( user.equals( todo.getUser() ) ) {
+                    resultList.add( todo );
                 }
             }
         }
         return resultList;
     }
 
-    public void addTodo(String name, String desc, Date targetDate, boolean isDone) {
-        todos.add(new Todo(++todoCount, desc, name, targetDate, isDone));
+    public Todo retrieveTodo( int id ) {
+        for ( Todo todo : todos ) {
+            if ( todo.getId() == id ) {
+                return todo;
+            }
+        }
+        return null;
     }
 
-    public void deleteTodo(int id) {
+    public void updateTodo( Todo todo ) {
+        todos.remove( todo );
+        todos.add( todo );
+    }
+
+    public void addTodo( String name, String desc, Date targetDate, boolean isDone ) {
+        todos.add( new Todo( ++todoCount, desc, name, targetDate, isDone ) );
+    }
+
+    public void deleteTodo( int id ) {
         Iterator<Todo> iterator = todos.iterator();
-        while (iterator.hasNext()) {
+        while ( iterator.hasNext() ) {
             Todo todo = iterator.next();
-            if (todo.getId() == id) {
+            if ( todo.getId() == id ) {
                 iterator.remove();
             }
         }
