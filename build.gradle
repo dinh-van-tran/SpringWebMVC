@@ -14,6 +14,7 @@ dependencies {
     implementation 'log4j:log4j:1.2.17'
     implementation 'javax.servlet:jstl:1.2'
     implementation 'org.webjars:bootstrap:3.3.6'
+    implementation 'org.webjars:bootstrap-datepicker:1.0.1'
     implementation 'org.webjars:jquery:1.9.1'
     implementation 'org.hibernate:hibernate-validator:5.0.1.Final'
 
