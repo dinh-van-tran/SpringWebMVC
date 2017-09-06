@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import ems.model.Todo;
 import ems.service.TodoService;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class TodoController {
+    private static Logger mLog = Logger.getLogger(TodoController.class);
+
     @Autowired
     private TodoService mTodoService;
 
@@ -34,6 +37,7 @@ public class TodoController {
 
     @RequestMapping( value = "/list-todos", method = RequestMethod.GET )
     public String showTodosList( ModelMap model ) {
+        mLog.debug("showTodosList begin");
         String user = getLoggedInUsername();
         model.addAttribute( "todos", mTodoService.retrieveTodos(user) );
         return "list-todos";
