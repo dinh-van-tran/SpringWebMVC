@@ -20,10 +20,8 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
-@SessionAttributes( "name" )
 public class TodoController {
     @Autowired
     private TodoService mTodoService;
@@ -34,9 +32,10 @@ public class TodoController {
         binder.registerCustomEditor( Date.class, new CustomDateEditor( dateFormat, false ) );
     }
 
-    @RequestMapping( value = {"/", "/list-todos"}, method = RequestMethod.GET )
+    @RequestMapping( value = "/list-todos", method = RequestMethod.GET )
     public String showTodosList( ModelMap model ) {
-        model.addAttribute( "todos", mTodoService.retrieveTodos( getPrincipal() ) );
+        String user = getLoggedInUsername();
+        model.addAttribute( "todos", mTodoService.retrieveTodos(user) );
         return "list-todos";
     }
 
@@ -51,7 +50,7 @@ public class TodoController {
         if ( result.hasErrors() ) {
             return "todo";
         }
-        mTodoService.addTodo( getPrincipal(), todo.getDesc(), todo.getTargetDate(), false );
+        mTodoService.addTodo( getLoggedInUsername(), todo.getDesc(), todo.getTargetDate(), false );
         model.clear();
         return "redirect:/list-todos";
     }
@@ -73,20 +72,17 @@ public class TodoController {
         if ( result.hasErrors() ) {
             return "todo";
         }
-        todo.setUser( getPrincipal() );
+        todo.setUser( getLoggedInUsername() );
         mTodoService.updateTodo( todo );
         model.clear();
         return "redirect:/list-todos";
     }
 
-    private String getPrincipal() {
-        String userName = null;
+    private String getLoggedInUsername() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if(principal instanceof UserDetails) {
-            userName = ((UserDetails)principal).getUsername();
-        } else {
-            userName = principal.toString();
+            return ((UserDetails)principal).getUsername();
         }
-        return userName;
+        return principal.toString();
     }
 }
