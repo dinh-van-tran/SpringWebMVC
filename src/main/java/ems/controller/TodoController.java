@@ -10,6 +10,8 @@ import ems.service.TodoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -32,10 +34,9 @@ public class TodoController {
         binder.registerCustomEditor( Date.class, new CustomDateEditor( dateFormat, false ) );
     }
 
-    @RequestMapping( value = "/list-todos", method = RequestMethod.GET )
+    @RequestMapping( value = {"/", "/list-todos"}, method = RequestMethod.GET )
     public String showTodosList( ModelMap model ) {
-        String user = (String) model.get( "name" );
-        model.addAttribute( "todos", mTodoService.retrieveTodos( user ) );
+        model.addAttribute( "todos", mTodoService.retrieveTodos( getPrincipal() ) );
         return "list-todos";
     }
 
@@ -50,7 +51,7 @@ public class TodoController {
         if ( result.hasErrors() ) {
             return "todo";
         }
-        mTodoService.addTodo( (String) model.get( "name" ), todo.getDesc(), todo.getTargetDate(), false );
+        mTodoService.addTodo( getPrincipal(), todo.getDesc(), todo.getTargetDate(), false );
         model.clear();
         return "redirect:/list-todos";
     }
@@ -72,9 +73,20 @@ public class TodoController {
         if ( result.hasErrors() ) {
             return "todo";
         }
-        todo.setUser( (String) model.get( "name" ) );
+        todo.setUser( getPrincipal() );
         mTodoService.updateTodo( todo );
         model.clear();
         return "redirect:/list-todos";
+    }
+
+    private String getPrincipal() {
+        String userName = null;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(principal instanceof UserDetails) {
+            userName = ((UserDetails)principal).getUsername();
+        } else {
+            userName = principal.toString();
+        }
+        return userName;
     }
 }
